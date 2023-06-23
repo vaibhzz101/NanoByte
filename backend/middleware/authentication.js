@@ -1,34 +1,24 @@
-const jwt = require("jsonwebtoken");
-const { BlacklistModel } = require("../model/blacklisting");
-const {User }= require("../model/user.model")
-require('dotenv').config();
+require('dotenv').config()
+const jwt = require('jsonwebtoken');
+const jwtkey = process.env.jwtkey;
 
-const authentication = async (req,res, next) => {
+
+const authentication = async (req, res, next) => {
+
     try {
-        const token = req.headers.authorization.split(" ")[1];
-
-        const isBlacklisted = await BlacklistModel.findOne({token});
-        if(isBlacklisted){
-            return res.status(401).send("token is Blacklisted");
-
-        }
-        const decoded = jwt.verify(token, JWT_SECRET_KEY)
-        const { userID } = decoded;
-
-        const user = await User.findById(userId);
-        if(!user){
-            return res.status(401).json({message: "unauthorised"});
-
-        }
-        req.user = user;
+        const token = req.headers.authorization;
+        
+        const decoded = jwt.verify(token,jwtkey)
+       if(decoded){
+        req.body.userID = decoded.userID;
         next()
-    } 
-    catch(error){
-        if(error.name === 'TokenExpiredError'){
-            return res.status(401).send("Access token expired")
-        }
-        return res.status(401).json({message: "unauthorised"})
-
+       }
+       else return res.status(400).json({message : "login frist"})
+    } catch (error) {
+        res.status(400).json({msg : error.message})
     }
 }
-module.exports = { authentication}
+
+module.exports ={
+    authentication
+} 
