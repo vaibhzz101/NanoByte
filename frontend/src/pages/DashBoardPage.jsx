@@ -1,48 +1,39 @@
-import React from "react";
-
+import React, { useEffect, useState } from "react";
 const DashboardPage = () => {
-  // Simulated user data for demonstration
-  const user = {
-    name: "John Doe",
-    email: "johndoe@example.com",
-    profilePicture: "https://example.com/profile-picture.jpg",
-    // Add more user data as needed
+  const [recentActivities, setRecentActivities] = useState([]);
+  const [interviewHistory, setInterviewHistory] = useState([]);
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+
+  const fetchUserData = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch("http://localhost:8080/user/current-user", {
+        headers: {
+          Authorization: token,
+        },
+      });
+      const data = await response.json();
+      console.log(data);
+      setUser(data);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
   };
 
-  const recentActivities = [
-    {
-      id: 1,
-      type: "Interview Session",
-      description: "Completed technical interview for Company XYZ",
-      date: "June 15, 2023",
-    },
-    {
-      id: 2,
-      type: "Feedback Received",
-      description: "Received feedback on last interview",
-      date: "June 10, 2023",
-    },
-    // Add more recent activities as needed
-  ];
+  useEffect(() => {
+    // Fetch recent activities
+    fetch("http://localhost:8080/recent-activities")
+      .then((response) => response.json())
+      .then((data) => setRecentActivities(data));
 
-  const interviewHistory = [
-    {
-      id: 1,
-      date: "June 15, 2023",
-      type: "Technical Interview",
-      duration: "45 minutes",
-      score: 85,
-    },
-    {
-      id: 2,
-      date: "June 10, 2023",
-      type: "Behavioral Interview",
-      duration: "30 minutes",
-      score: 92,
-    },
-    // Add more interview history entries as needed
-  ];
-
+    // Fetch interview history
+    fetch("http://localhost:8080/interview-history")
+      .then((response) => response.json())
+      .then((data) => setInterviewHistory(data));
+  }, []);
   return (
     <div className="container mx-auto py-8">
       <h1 className="text-3xl font-bold mb-4">Dashboard</h1>

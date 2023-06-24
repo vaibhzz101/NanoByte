@@ -8,7 +8,9 @@ const InterviewQuestions = () => {
   useEffect(() => {
     const fetchInterviewQuestions = async () => {
       try {
-        const response = await axios.get("/api/interview-questions"); // Replace with your API endpoint
+        const response = await axios.get(
+          "https://api.openai.com/v1/chat/completions"
+        ); // Replace with your API endpoint
 
         setQuestions(response.data);
         setLoading(false);
