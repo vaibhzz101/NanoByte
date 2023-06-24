@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
-
+require("dotenv").config();
 const InterviewSimulatorPage = () => {
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
-  const apiKey = "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";
 
   const simulateInterview = async () => {
     try {
@@ -21,7 +20,7 @@ const InterviewSimulatorPage = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${apiKey}`,
+            Authorization: `Bearer ${process.env.api_key}`,
           },
         }
       );
