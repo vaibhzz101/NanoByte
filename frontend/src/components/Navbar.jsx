@@ -1,3 +1,6 @@
+import { Link } from "react-router-dom";
+// import Signup from "../pages.jsx/Signup";
+
 const Navbar = () => {
   return (
     <nav className="bg-blue-500 text-white py-4">
@@ -27,6 +30,11 @@ const Navbar = () => {
           <li>
             <a href="/contact" className="hover:text-blue-200">
               Contact
+            </a>
+          </li>
+          <li>
+            <a href="/signin" className="hover:text-blue-200">
+              Log In
             </a>
           </li>
         </ul>

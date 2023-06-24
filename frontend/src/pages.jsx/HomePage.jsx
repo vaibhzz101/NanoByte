@@ -1,10 +1,19 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { Link, useNavigate } from "react-router-dom";
+// import MainRoutes from "./components/MainRoutes";
 
 const HomePage = () => {
+  const navigate = useNavigate();
+
+  const SinnupClick = () => {
+    navigate("signup");
+  };
+
   return (
     <div>
       <Navbar />
+
       <div className="bg-gray-200 text-center py-16">
         <h1 className="text-4xl font-bold mb-4">
           Welcome to AI-Powered Interview Mastery
@@ -50,6 +59,7 @@ const HomePage = () => {
           <p className="text-lg">
             Sign up now and start your journey towards interview mastery!
           </p>
+
           <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mt-4">
             Sign Up
           </button>

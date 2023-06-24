@@ -1,10 +1,14 @@
 import "./App.css";
-import HomePage from "./pages.jsx/HomePage";
+// import HomePage from "./pages.jsx/HomePage";
+import MainRoutes from "./components/MainRoutes";
 function App() {
   return (
-    <div className="bg-gray-200 min-h-screen flex  justify-center">
-      <HomePage />
-    </div>
+    <>
+      <MainRoutes />
+      {/* <div className="bg-gray-200 min-h-screen flex  justify-center">
+        <HomePage />
+      </div> */}
+    </>
   );
 }
 
